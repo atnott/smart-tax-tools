@@ -43,9 +43,10 @@ clean:
 	rm -rf $(VENV) build/ dist/ *.egg-info
 	find . -type d -name "__pycache__" -exec rm -rf {} +
 
-build: clean
+build:
+	rm -rf smart_tax_tools/dist smart_tax_tools/build smart_tax_tools/*.egg-info
 	$(PYTHON) -m pip install --upgrade setuptools build twine
-	cd $(PROJECT_DIR) && ../$(PYTHON) -m build --outdir ../dist/
+	$(PYTHON) -m build smart_tax_tools/ --outdir dist/
 
 publish: build
 	$(PYTHON) -m twine upload --repository testpypi dist/*

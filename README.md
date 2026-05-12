@@ -18,7 +18,7 @@ make all
 ```
 
 ## Установка
-Библиотека установлена на [TestPyPI](https://test.pypi.org/project/smart-tax-tools/0.0.3/), для установки используйте команду:
+Библиотека установлена на [TestPyPI](https://test.pypi.org/project/smart-tax-tools/0.0.4/), для установки используйте команду:
 ```bash
-pip install --index-url https://test.pypi.org/simple/ smart-tax-tools==0.0.3
+pip install --index-url https://test.pypi.org/simple/ smart-tax-tools==0.0.4
 ```

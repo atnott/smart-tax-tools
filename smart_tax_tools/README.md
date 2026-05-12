@@ -36,9 +36,9 @@
 ## 4. Инструкция по развертыванию
 Проект опубликован на TestPyPI.
 
-**Ссылка на проект:** [smart-tax-tools на TestPyPI](https://test.pypi.org/project/smart-tax-tools/0.0.3/)
+**Ссылка на проект:** [smart-tax-tools на TestPyPI](https://test.pypi.org/project/smart-tax-tools/0.0.4/)
 
 Для установки библиотеки в чистое окружение используйте команду:
 ```bash
-pip install --index-url https://test.pypi.org/simple/ smart-tax-tools==0.0.3
+pip install --index-url https://test.pypi.org/simple/ smart-tax-tools==0.0.4
 ```

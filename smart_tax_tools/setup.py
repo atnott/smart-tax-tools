@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name='smart-tax-tools',
-    version='0.0.3',
+    version='0.0.4',
     author='Anton',
     description="Библиотека для автоматизации финансовых расчетов и налогов",
     long_description=long_description,
