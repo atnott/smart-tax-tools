@@ -31,8 +31,8 @@ lint:
 
 check-deps:
 	@echo "Checking for missing or extra dependencies..."
-	$(PYTHON) -m pip_check_reqs.pip_extra_reqs $(SRC_DIR)
-	$(PYTHON) -m pip_check_reqs.pip_missing_reqs $(SRC_DIR)
+	$(VENV)/bin/pip-extra-reqs smart_tax_tools/src
+	$(VENV)/bin/pip-missing-reqs smart_tax_tools/src
 
 test:
 	PYTHONPATH=$(SRC_DIR) $(PYTEST) $(TESTS_DIR)

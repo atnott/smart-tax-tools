@@ -8,8 +8,6 @@ def test_calculate_tax():
 
 
 def test_calculate_net_income():
-    assert calculate_net_income(total_amount=1_000_000,
-                                tax_rate=10,
-                                fee_rate=100_000) == 800_000
+    assert calculate_net_income(1_000_000, 10, 100_000) == 800_000
     assert calculate_net_income(0, 10, 100_000) == 0
     assert calculate_net_income(1_000, 10, 100_000) == 0
