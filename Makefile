@@ -1,37 +1,51 @@
-PYTHON = .venv/bin/python3
-PYTEST = .venv/bin/pytest
-MYPY = .venv/bin/mypy
-FLAKE8 = .venv/bin/flake8
-BUILD = $(PYTHON) -m build
-TWINE = $(PYTHON) -m twine
+VENV = .venv
+PYTHON = $(VENV)/bin/python3
+PIP = $(VENV)/bin/pip
+MYPY = $(VENV)/bin/mypy
+FLAKE8 = $(VENV)/bin/flake8
+PYTEST = $(VENV)/bin/pytest
+BLACK = $(VENV)/bin/black
 
 PROJECT_DIR = smart_tax_tools
+SRC_DIR = $(PROJECT_DIR)/src
+TESTS_DIR = $(PROJECT_DIR)/tests
 
-.PHONY: all test lint typecheck clean build publish
+.PHONY: all install lint typecheck test clean build publish format check-deps check
 
-all: lint typecheck test
+all: format lint typecheck check-deps test
 
 install:
-	python3 -m venv .venv
-	$(PYTHON) -m pip install --upgrade pip
-	$(PYTHON) -m pip install flake8 mypy pytest build twine
-
-clean:
-	rm -rf $(PROJECT_DIR)/.pytest_cache $(PROJECT_DIR)/.mypy_cache build/ dist/ *.egg-info
-	find . -type d -name "__pycache__" -exec rm -rf {} +
-
-lint:
-	$(FLAKE8) $(PROJECT_DIR)/src/ $(PROJECT_DIR)/tests/
+	python3 -m venv $(VENV)
+	$(PIP) install --upgrade pip
+	$(PIP) install flake8 mypy pytest build twine black pip-check-reqs
+	$(PIP) install -r requirements.txt
 
 typecheck:
-	$(MYPY) $(PROJECT_DIR)/src/
+	$(MYPY) $(SRC_DIR)
+
+format:
+	$(BLACK) $(SRC_DIR) $(TESTS_DIR)
+
+lint:
+	$(FLAKE8) $(SRC_DIR) $(TESTS_DIR)
+
+check-deps:
+	@echo "Checking for missing or extra dependencies..."
+	$(PYTHON) -m pip_check_reqs.pip_extra_reqs $(SRC_DIR)
+	$(PYTHON) -m pip_check_reqs.pip_missing_reqs $(SRC_DIR)
 
 test:
-	PYTHONPATH=$(PROJECT_DIR)/src $(PYTEST) $(PROJECT_DIR)/tests/
+	PYTHONPATH=$(SRC_DIR) $(PYTEST) $(TESTS_DIR)
+
+check: lint typecheck check-deps
+
+clean:
+	rm -rf $(VENV) build/ dist/ *.egg-info
+	find . -type d -name "__pycache__" -exec rm -rf {} +
 
 build: clean
 	$(PYTHON) -m pip install --upgrade setuptools build twine
-	cd smart_tax_tools && python3 -m build --outdir ../dist/
+	cd $(PROJECT_DIR) && ../$(PYTHON) -m build --outdir ../dist/
 
 publish: build
-	$(TWINE) upload --repository testpypi dist/*
+	$(PYTHON) -m twine upload --repository testpypi dist/*

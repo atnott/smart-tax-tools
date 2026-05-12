@@ -7,6 +7,7 @@ setup(
     name='smart-tax-tools',
     version='0.0.3',
     author='Anton',
+    description="Библиотека для автоматизации финансовых расчетов и налогов",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/atnott/smart-tax-tools",
